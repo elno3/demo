@@ -3,29 +3,56 @@ package com.example.demo;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-class DemoApplicationTests {
+public class DemoApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
         var i = 6;
         var s = "strings";
-        Function<String, String> f = x -> "i'm fuinction";
-        System.out.println(f.apply("5"));
-
+        Function<String, String> oneArgfun = (x) -> " i'm fuinction and receivd x: " + x;
+        System.out.println(oneArgfun.apply("5"));
+        
+        
+        BiFunction<Integer, Integer, String> twoArgFunc = (x, y) -> "sum: " + (x + y);
+        //String result = bifun.apply(5, 8);
+        
+        //assertEquals("sum: 13",result);
+        
+        BiFunction<Integer, Integer, String> bigFunc = twoArgFunc.andThen(oneArgfun);
+		String tes = bigFunc.apply(4, 6);
+        assertEquals(" i'm fuinction and receivd x: sum: 10", tes);
+        
+        BiFunction<Integer, Integer, String> rewriteBigFunc = new BiFunction<Integer, Integer, String>() {
+        	@Override
+        	public String apply(Integer x, Integer y) {
+        		String resultFromTwoArgFunc = twoArgFunc.apply(x, y);
+        		String resultFromOneArgFunc = oneArgfun.apply(resultFromTwoArgFunc);
+        		return resultFromOneArgFunc;
+        	}
+        };
+        
+        String test2 = rewriteBigFunc.apply(4, 6);
+        assertEquals(" i'm fuinction and receivd x: sum: 10", test2);
+        
         Consumer c = x -> System.out.println("consumed");
         c.accept("x");
 
         Supplier<String> supplier = () -> "String supplier";
+  
         ss(supplier);
         Predicate<Integer> p = (x) -> x > 0;
         Predicate<Integer> p1 = (x) -> x < 100;
-        final Predicate<Integer> and = p.and(p).and(p1);
-        System.out.println(and.test(500));
+        final Predicate<Integer> and = p.and(p1);
+        assertFalse("expected predicate false for and function",and.test(500));
     }
 
     private void ss(Supplier<String> supplier) {
@@ -40,12 +67,12 @@ class DemoApplicationTests {
         new Exception().printStackTrace();
     }
 
-    @Test
+    //@Test
     public void lambda() throws Exception {
         invoke(() -> target());
     }
 
-    @Test
+    //@Test
     public void methodReference() throws Exception {
         invoke(DemoApplicationTests::target);
     }
