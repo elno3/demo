@@ -11,6 +11,7 @@ public class ManualSortList {
 	public void sortList() {
 
 		// I commented the line below because a LIST created with the method Arrays.asList IS NOT MODIFIABLE
+		// if you try to remove an element from the list below, an exception is throwed.. 
 		// List<Integer> asList = Arrays.asList(5, 9, 2, 44);
 		
 		// To do my sort I need to create the list in standard way
