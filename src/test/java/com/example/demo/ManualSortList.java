@@ -15,42 +15,45 @@ public class ManualSortList {
 		// List<Integer> asList = Arrays.asList(5, 9, 2, 44);
 		
 		// To do my sort I need to create the list in standard way
-		List<Integer> listSource = new ArrayList<>();
-		listSource.add(6);
-		listSource.add(1);
-		listSource.add(6);		
-		listSource.add(2);
-		listSource.add(3);
-		listSource.add(0);
-		listSource.add(9);
-		listSource.add(2);
-		listSource.add(6);
+		List<Integer> listToSort = new ArrayList<>();
+		listToSort.add(6);
+		listToSort.add(1);
+		listToSort.add(6);		
+		listToSort.add(2);
+		listToSort.add(3);
+		listToSort.add(0);
+		listToSort.add(9);		
+		listToSort.add(-5);
+		listToSort.add(2);
+		listToSort.add(6);
 		
-		// the result of my sort
-		List<Integer> listTarget = new ArrayList<Integer>();
+		// temporany list to keep the order
+		List<Integer> tempList = new ArrayList<Integer>();
 
 		Integer lastNumber = null;
 
-		while (!listSource.isEmpty()) {
+		while (!listToSort.isEmpty()) {
 
-			for (Integer currentNumber : listSource) {
+			for (Integer currentNumber : listToSort) {
 				if (lastNumber == null || currentNumber < lastNumber) {
 					lastNumber = currentNumber;
 				}
 			}
 
-			for (Integer testToRemove : listSource) {
+			for (Integer testToRemove : listToSort) {
 				if (testToRemove == lastNumber) {
-					listTarget.add(lastNumber);					
+					tempList.add(lastNumber);					
 				}
 			}
-			listSource.removeAll(listTarget);
+			listToSort.removeAll(tempList);
 
 			lastNumber = null;
 
 		}
+		
+		listToSort.addAll(tempList);
 
-		System.out.println("List orderd " + listTarget);
+		System.out.println("List orderd " + listToSort);
 
 	}
 
