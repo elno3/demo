@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
@@ -54,6 +55,40 @@ public class ManualSortList {
 		listToSort.addAll(tempList);
 
 		System.out.println("List orderd " + listToSort);
+
+	}
+	
+	
+	@Test
+	public <T extends Comparable<? super T>> Collection<T> sortCollection(Collection<T> collectionIn) {
+
+		// temporany list to keep the order
+		Collection<T> tempList = new ArrayList<T>();
+
+		T lastNumber = null;
+
+		while (!collectionIn.isEmpty()) {
+
+			for (T currentNumber : collectionIn) {
+				if (lastNumber == null || currentNumber.compareTo(lastNumber) < 0) {
+					lastNumber = currentNumber;
+				}
+			}
+
+			for (T testToRemove : collectionIn) {
+				if (testToRemove == lastNumber) {
+					tempList.add(lastNumber);
+				}
+			}
+			collectionIn.removeAll(tempList);
+
+			lastNumber = null;
+
+		}
+
+		collectionIn.addAll(tempList);
+		
+		return collectionIn;
 
 	}
 
