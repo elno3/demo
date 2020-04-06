@@ -18,10 +18,12 @@ public class Dealer {
 		// TODO Auto-generated method stub
 		playingCard.shufflePlayingCard();
 		
-		abuMalek.setCardsInHand(playingCard.getFourCards());
-		elno3.setCardsInHand(playingCard.getFourCards());
 		List<Card> cardForPot = playingCard.getFourCards();
 		this.pot = new Pot(cardForPot);
+		abuMalek.setCardsInHand(playingCard.getFourCards());
+		abuMalek.setPot(pot);
+		elno3.setCardsInHand(playingCard.getFourCards());
+		elno3.setPot(pot);
 	}
 	
 	public int getNumberOfRemainingCards() {
