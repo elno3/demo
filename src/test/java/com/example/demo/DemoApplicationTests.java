@@ -27,6 +27,8 @@ public class DemoApplicationTests {
         
         //assertEquals("sum: 13",result);
         
+//        twoArgFunc.andThen(oneArgfun).apply(4, 6);
+        
         BiFunction<Integer, Integer, String> bigFunc = twoArgFunc.andThen(oneArgfun);
 		String tes = bigFunc.apply(4, 6);
         assertEquals(" i'm fuinction and receivd x: sum: 10", tes);

@@ -7,6 +7,30 @@ import java.util.List;
 import org.junit.Test;
 
 public class ManualSortList {
+	
+	@Test
+	public void sortcollectionCaller() {
+
+		// I commented the line below because a LIST created with the method Arrays.asList IS NOT MODIFIABLE
+		// if you try to remove an element from the list below, an exception is throwed.. 
+		// List<Integer> asList = Arrays.asList(5, 9, 2, 44);
+		
+		// To do my sort I need to create the list in standard way
+		List<String> listToSort = new ArrayList<>();
+		listToSort.add(6+"");
+		listToSort.add(1+"");
+		listToSort.add(6+"");		
+		listToSort.add(2+"");
+		listToSort.add(3+"");
+		listToSort.add(0+"");
+		listToSort.add(9+"");		
+		listToSort.add(-5+"");
+		listToSort.add(2+"");
+		listToSort.add(6+"");
+		Collection<String> sortCollection = sortCollection(listToSort);
+		System.out.println(sortCollection);
+		}
+	
 
 	@Test
 	public void sortList() {
@@ -59,7 +83,7 @@ public class ManualSortList {
 	}
 	
 	
-	@Test
+
 	public <T extends Comparable<? super T>> Collection<T> sortCollection(Collection<T> collectionIn) {
 
 		// temporany list to keep the order
