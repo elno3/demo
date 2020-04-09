@@ -19,8 +19,7 @@ public class PlayingCard {
 
 	public PlayingCard() {
 
-		List<String> of = List.of("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack",
-				"queen", "king");
+		List<String> of = List.of("1", "2", "3", "4", "5", "6", "7", "6", "9", "10", "jack", "queen", "king");
 
 		playingCard = of.stream()
 							.flatMap(nameOfCard -> Arrays.stream(Types.values())

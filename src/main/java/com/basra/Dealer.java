@@ -22,6 +22,10 @@ public class Dealer {
 		elno3.setCardsInHand(playingCard.getFourCards());
 		List<Card> cardForPot = playingCard.getFourCards();
 		this.pot = new Pot(cardForPot);
+		
+		System.out.println(cardForPot);
+		
+		
 	}
 	
 	public int getNumberOfRemainingCards() {

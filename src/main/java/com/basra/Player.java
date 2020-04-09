@@ -10,25 +10,26 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class Player {
-	
 
 	private String name;
 	private Integer score;
 	private Integer cardscounter;
 	private Pot pot;
 	private List<Card> cardsInHand;
-	
-	
-	public void play(Card card) {		
-		
-		/* pot.add(card);
-		 * check if remove something
+
+	public void play(Card card) {
+
+		/*
+		 * pot.add(card); check if remove something
 		 * 
 		 * 
 		 * 
 		 * pot.update();
-		 * */
+		 */
 	}
-	
+
+	public boolean hasMoreThan26() {
+		return cardscounter > 26;
+	}
 
 }

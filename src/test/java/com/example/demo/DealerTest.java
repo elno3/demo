@@ -36,13 +36,13 @@ public class DealerTest {
 
     @Test
     public void name() {
-        List<String> list = Arrays.asList("1", "2", "3", "4","5");
-        final List<String> result = doCombination(0, 1, list, new ArrayList<>());
+        List<String> list = Arrays.asList("1", "2", "3", "4");
+        final List<String> result = sort(0, 1, list, new ArrayList<>());
         System.out.println("result is: " + result);
 
     }
 
-    private List<String> doCombination(int i, int secondCursor, List<String> list, List<String> combo) {
+    private List<String> sort(int i, int secondCursor, List<String> list, List<String> combo) {
 
         if (i < list.size()) {
             String sub = list.get(i);
@@ -53,14 +53,13 @@ public class DealerTest {
                 System.out.println("combo:" + combo);
             }
             secondCursor++;
-            
-            if (secondCursor > list.size() || secondCursor == list.size()) {
+            if (secondCursor > list.size() || secondCursor == list.size() - 1) {
                 i++;
                 System.out.println("moving to i:" + i);
                 secondCursor =i+1;
             }
             System.out.println("calling sort with i: " + i + " and second cursor: " + secondCursor);
-            return doCombination(i, secondCursor, list, combo);
+            return sort(i, secondCursor, list, combo);
         }
         return combo;
     }
