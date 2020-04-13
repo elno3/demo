@@ -60,8 +60,10 @@ public class Pot {
 										.mapToInt(card -> Integer.valueOf(card.getName()) )
 										.sum() == Integer.valueOf(nameCard))
 			.collect(Collectors.toList());
-			
-			
+
+			if (combinationsMatchInputSumCards.isEmpty()) {
+				cards.add(cardIn);
+			}
 			
 			return combinationsMatchInputSumCards;
 		}
