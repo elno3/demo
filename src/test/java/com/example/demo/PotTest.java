@@ -1,12 +1,9 @@
 package com.example.demo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -100,7 +97,7 @@ public class PotTest {
     }
 
 
-    private List<List<Card>> calculateFinalReuslt(int startIndex, int secondIndex, List<List<Card>> allPossibileCombination, Card playedCard, List<Card> tempResult, List<List<Card>> finalResult) {
+    private List<List<Card>> getAllPossibleCardCombinationToEat(int startIndex, int secondIndex, List<List<Card>> allPossibileCombination, List<List<Card>> finalResult) {
 
         if (startIndex == allPossibileCombination.size() - 1) {
             return finalResult;
@@ -109,7 +106,7 @@ public class PotTest {
         if (secondIndex == allPossibileCombination.size()) {
             startIndex++;
             secondIndex = startIndex + 1;
-            return calculateFinalReuslt(startIndex, secondIndex, allPossibileCombination, null, tempResult, finalResult);
+            return getAllPossibleCardCombinationToEat(startIndex, secondIndex, allPossibileCombination, finalResult);
         }
 
         List<Card> currentList = new ArrayList<>();
@@ -123,32 +120,39 @@ public class PotTest {
                 currentList.addAll(subList);
             }
         }
-        boolean anyExternalMatch =
-                finalResult.stream().
-                        anyMatch(l -> l.containsAll(currentList));
+        boolean anyExternalMatch = finalResult.stream()
+                .anyMatch(l -> l.containsAll(currentList));
         if (!anyExternalMatch) {
             finalResult.add(currentList);
         }
-        return calculateFinalReuslt(startIndex, ++secondIndex, allPossibileCombination, null, tempResult, finalResult);
+        return getAllPossibleCardCombinationToEat(startIndex, ++secondIndex, allPossibileCombination, finalResult);
     }
 
     @Test
-    public void testNewRecrusive() {
+    public void testPossibleCardsToEat() {
         List<Card> cards = List.of(
                 new Card(Types.HEART, "5"),
                 new Card(Types.CLUB, "1"),
                 new Card(Types.HEART, "6"),
                 new Card(Types.HEART, "2"),
                 new Card(Types.CLUB, "2"),
-                new Card(Types.HEART, "9"));
+                new Card(Types.HEART, "4"));
         Pot pot = new Pot(cards);
         Card playedCard = new Card(Types.CLUB, "9");
         List<List<Card>> allPossibileCombination = pot.putCardOnTable(playedCard);
+        System.out.println("**********All possible combinations********:");
         allPossibileCombination.forEach(System.out::println);
-        System.out.println("**********");
-        List<Card> tempResult = new ArrayList<>();
+        System.out.println("**********Possible Cards to eat********:");
         List<List<Card>> finalResult = new ArrayList<>();
-        List<List<Card>> lists = calculateFinalReuslt(0, 1, allPossibileCombination, null, tempResult, finalResult);
-        lists.forEach(System.out::println);
+        List<List<Card>> cardCombinationToEat = getAllPossibleCardCombinationToEat(0, 1, allPossibileCombination, finalResult);
+        cardCombinationToEat.forEach(System.out::println);
+        List<List<Card>> expectedCardsCombinationToEat = List.of(
+                List.of(new Card(Types.HEART, "5"), new Card(Types.HEART, "4"), new Card(Types.CLUB, "1"), new Card(Types.HEART, "6"), new Card(Types.HEART, "2")),
+                List.of(new Card(Types.HEART, "5"), new Card(Types.HEART, "4"), new Card(Types.CLUB, "1"), new Card(Types.HEART, "6"), new Card(Types.CLUB, "2")),
+                List.of(new Card(Types.HEART, "5"), new Card(Types.HEART, "2"), new Card(Types.CLUB, "2"))
+        );
+
+        Assert.assertEquals(expectedCardsCombinationToEat, cardCombinationToEat);
+
     }
 }
