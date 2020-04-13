@@ -123,9 +123,13 @@ public class PotTest {
                 currentList.addAll(subList);
             }
         }
-        finalResult.add(currentList);
+        boolean anyExternalMatch =
+                finalResult.stream().
+                        anyMatch(l -> l.containsAll(currentList));
+        if (!anyExternalMatch) {
+            finalResult.add(currentList);
+        }
         return calculateFinalReuslt(startIndex, ++secondIndex, allPossibileCombination, null, tempResult, finalResult);
-
     }
 
     @Test
@@ -140,6 +144,8 @@ public class PotTest {
         Pot pot = new Pot(cards);
         Card playedCard = new Card(Types.CLUB, "9");
         List<List<Card>> allPossibileCombination = pot.putCardOnTable(playedCard);
+        allPossibileCombination.forEach(System.out::println);
+        System.out.println("**********");
         List<Card> tempResult = new ArrayList<>();
         List<List<Card>> finalResult = new ArrayList<>();
         List<List<Card>> lists = calculateFinalReuslt(0, 1, allPossibileCombination, null, tempResult, finalResult);
