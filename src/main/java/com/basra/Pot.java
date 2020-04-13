@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.example.demo.UtilitiesTest;
-
 import ch.qos.logback.classic.net.SyslogAppender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
