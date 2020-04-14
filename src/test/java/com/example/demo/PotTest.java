@@ -242,8 +242,34 @@ public class PotTest {
         assertEquals(3, pot.getCards().size());
 
         Card cardIn = new Card(Types.SPADS, "3");
-        pot.putCardOnTable(cardIn);
+        List<List<Card>> possibleCombination = pot.putCardOnTable(cardIn);
+        assertTrue(possibleCombination.isEmpty());
         assertTrue(pot.getCards().contains(cardIn));
         assertEquals(4, pot.getCards().size());
     }
+
+    @Test
+    public void useCaseSeven() {
+        List<Card> potCards = new ArrayList<>();
+        potCards.add(new Card(Types.HEART, "10"));
+        potCards.add(new Card(Types.CLUB, "king"));
+        potCards.add(new Card(Types.HEART, "4"));
+
+        Card cardIn = new Card(Types.SPADS, "king");
+        List<List<Card>> expectedCardsCombinationToEat = List.of(
+                List.of(new Card(Types.CLUB, "king"), cardIn)
+        );
+        testPossibleCardsToEat(potCards, cardIn, expectedCardsCombinationToEat);
+    }
+
+    @Test
+    public void useCaseEight() {
+        List<Card> potCards = List.of(
+                new Card(Types.HEART, "4"));
+
+        List<List<Card>> expectedCardsCombinationToEat = List.of(List.of(new Card(Types.HEART, "4")));
+
+        testPossibleCardsToEat(potCards, new Card(Types.CLUB, "4"), expectedCardsCombinationToEat);
+    }
+
 }
