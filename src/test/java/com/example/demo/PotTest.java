@@ -246,4 +246,18 @@ public class PotTest {
         assertTrue(pot.getCards().contains(cardIn));
         assertEquals(4, pot.getCards().size());
     }
+
+    @Test
+    public void useCaseSeven() {
+        List<Card> potCards = new ArrayList<>();
+        potCards.add(new Card(Types.HEART, "10"));
+        potCards.add(new Card(Types.CLUB, "king"));
+        potCards.add(new Card(Types.HEART, "4"));
+
+        Card cardIn = new Card(Types.SPADS, "king");
+        List<List<Card>> expectedCardsCombinationToEat = List.of(
+                List.of(new Card(Types.CLUB, "king"), cardIn)
+        );
+        testPossibleCardsToEat(potCards, cardIn, expectedCardsCombinationToEat);
+    }
 }
